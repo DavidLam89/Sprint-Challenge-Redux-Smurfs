@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSmurfs } from '../actions';
+import { getSmurfs, setUpdateForm } from '../actions';
 import Smurf from './Smurf';
 
 class Smurfs extends React.Component {
@@ -15,7 +15,7 @@ class Smurfs extends React.Component {
         }
         return (
                 this.props.smurfs.map(smurf => {
-                    return <Smurf key={smurf.id} smurf={smurf} />;
+                    return <Smurf key={smurf.id} smurf={smurf} setUpdateForm={this.props.setUpdateForm}/>;
                 })
         );
     }
@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     {
-        getSmurfs
+        getSmurfs,
+        setUpdateForm
     }
 )(Smurfs);

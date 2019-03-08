@@ -8,20 +8,26 @@ class SmurfForm extends Component {
     this.state = {
       name: '',
       age: '',
-      height: ''
+      height: '',
+      updating: false
     };
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (
-  //     this.props.activeSmurf &&
-  //     prevProps.activeSmurf !== this.props.activeSmurf
-  //   ) {
-  //     this.setState({
-  //       ...this.props.activeSmurf
-  //     });
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.activeSmurf &&
+      prevProps.activeSmurf !== this.props.activeSmurf
+    ) {
+      this.setState({
+          ...this.props.activeSmurf,
+          updating: true
+      });
+    }
+  }
+
+  updateSmurf = e => {
+    console.log('i get here')
+  }
 
   addSmurf = e => {
     e.preventDefault();
@@ -46,13 +52,15 @@ class SmurfForm extends Component {
   }
 
   render() {
-    console.log(this.props.adding);
     let Style = {};
+    let myButton = 'Add to the village';
+    let myButtonFunction = this.addSmurf;
     this.props.adding ? Style = { display: 'block' } : Style = { display: 'none' };
-    console.log(Style);
+    this.state.updating ? myButton = 'Update this Smurf' : myButton = 'Add to the village';
+    this.state.updating ? myButtonFunction = this.updateSmurf : myButtonFunction = this.addSmurf;
     return (
       <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+        <form onSubmit={myButtonFunction}>
           <input
             onChange={this.handleInputChange}
             placeholder="name"
@@ -71,7 +79,7 @@ class SmurfForm extends Component {
             value={this.state.height}
             name="height"
           />
-          <button className="form-button">Add to the village</button>
+          <button className="form-button">{myButton}</button>
         </form>
         <h3 style={Style}>Sending data to server</h3>
       </div>
@@ -81,6 +89,7 @@ class SmurfForm extends Component {
 
 const mapStateToProps = state => ({
   adding: state.addingSmurf,
+  activeSmurf: state.activeSmurf
 });
 
 export default connect(

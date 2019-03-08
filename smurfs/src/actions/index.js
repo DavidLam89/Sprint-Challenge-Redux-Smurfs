@@ -4,6 +4,7 @@ export const FETCH_START = 'FETCH_START';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const ADD_START = 'ADD_START';
+export const SET_UPDATE = 'SET_UPDATE';
 
 export const getSmurfs = () => dispatch => {
   dispatch({ type: FETCH_START });
@@ -35,4 +36,10 @@ export const addSmurf = (smurf) => dispatch => {
               payload: err.response.data.error.message
           });
       })
+};
+
+export const setUpdateForm = (smurf) => {
+  return (
+    { type: SET_UPDATE, payload: smurf}
+  )
 };

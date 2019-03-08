@@ -2,7 +2,8 @@ import {
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_FAILURE,
-  ADD_START
+  ADD_START,
+  SET_UPDATE
 } from "../actions";
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   addingSmurf: false,
   updatingSmurf: false,
   deletingSmurf: false,
-  error: null
+  error: null,
+  activeSmurf: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,8 +42,12 @@ const reducer = (state = initialState, action) => {
     case ADD_START:
       return {
         ...state,
-        error: null,
         addingSmurf: true
+      };
+    case SET_UPDATE:
+      return {
+        ...state,
+        activeSmurf: action.payload
       };
     default:
       return state;
