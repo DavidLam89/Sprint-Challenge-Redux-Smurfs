@@ -11,7 +11,7 @@ class Smurfs extends React.Component {
 
     render() {
         if (this.props.fetching) {
-            return (<h3>Loading data from server</h3>)
+            return (<h3>Loading data from server...</h3>)
         }
         return (
                 this.props.smurfs.map(smurf => {

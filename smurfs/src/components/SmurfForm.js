@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { addSmurf } from '../actions';
+import { addSmurf, updateSmurf } from '../actions';
 
 class SmurfForm extends Component {
   constructor(props) {
@@ -26,7 +26,14 @@ class SmurfForm extends Component {
   }
 
   updateSmurf = e => {
-    console.log('i get here')
+    e.preventDefault();
+    this.props.updateSmurf({id: this.props.activeSmurf.id, ...this.state});
+    this.setState({
+      name: '',
+      age: '',
+      height: '',
+      updating: false
+    });
   }
 
   addSmurf = e => {
@@ -52,10 +59,12 @@ class SmurfForm extends Component {
   }
 
   render() {
-    let Style = {};
+    let Style1 = {};
+    let Style2 = {};
     let myButton = 'Add to the village';
     let myButtonFunction = this.addSmurf;
-    this.props.adding ? Style = { display: 'block' } : Style = { display: 'none' };
+    this.props.adding ? Style1 = { display: 'block' } : Style1 = { display: 'none' };
+    this.props.updating ? Style2 = { display: 'block' } : Style2 = { display: 'none' };
     this.state.updating ? myButton = 'Update this Smurf' : myButton = 'Add to the village';
     this.state.updating ? myButtonFunction = this.updateSmurf : myButtonFunction = this.addSmurf;
     return (
@@ -81,7 +90,8 @@ class SmurfForm extends Component {
           />
           <button className="form-button">{myButton}</button>
         </form>
-        <h3 style={Style}>Sending data to server</h3>
+        <h3 style={Style1}>Sending data to server...</h3>
+        <h3 style={Style2}>Updating data on server...</h3>
       </div>
     );
   }
@@ -89,12 +99,13 @@ class SmurfForm extends Component {
 
 const mapStateToProps = state => ({
   adding: state.addingSmurf,
+  updating: state.updatingSmurf,
   activeSmurf: state.activeSmurf
 });
 
 export default connect(
   mapStateToProps,
   {
-    addSmurf
+    addSmurf, updateSmurf
   }
 )(SmurfForm);

@@ -3,7 +3,8 @@ import {
   FETCH_SUCCESS,
   FETCH_FAILURE,
   ADD_START,
-  SET_UPDATE
+  SET_UPDATE,
+  UPDATE_START,
 } from "../actions";
 
 const initialState = {
@@ -31,6 +32,7 @@ const reducer = (state = initialState, action) => {
         error: null,
         fetchingSmurfs: false,
         addingSmurf: false,
+        updatingSmurf: false,
         smurfs: action.payload
       };
     case FETCH_FAILURE:
@@ -47,7 +49,12 @@ const reducer = (state = initialState, action) => {
     case SET_UPDATE:
       return {
         ...state,
-        activeSmurf: action.payload
+        activeSmurf: action.payload,
+      };
+    case UPDATE_START:
+      return {
+        ...state,
+        updatingSmurf: true
       };
     default:
       return state;
